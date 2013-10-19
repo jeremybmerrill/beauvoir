@@ -1,7 +1,7 @@
 Beauvoir
 ========
 
-Beauvoir is a gem for guessing a person's gender by their first name. Caveats apply (see below)
+Guess a person's gender by their first name. Caveats apply.
 
 Beauvoir uses more precise data sourced from [Open Gender Tracker](http://opengendertracking.org/)'s [Global Name Data](https://github.com/OpenGenderTracking/globalnamedata). Beauvoir lets you set avg and lower bounds and choose countries from which to draw data (so far US, UK only, more to come soon).
 
