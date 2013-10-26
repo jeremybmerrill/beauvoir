@@ -2,29 +2,28 @@ require './lib/beauvoir'
 
 describe Beauvoir do
   it "should be initializable" do
-    Beauvoir.new(:countries => :us)
+    Beauvoir.new(:country => :us)
   end
 
 
   context "once initialized" do
     before :all do
-      @simone_no_low_threshold = Beauvoir.new(:countries => :us, :threshold => 0.99)
-      @simone = Beauvoir.new(:countries => :us, :threshold => 0.99, :lower_threshold => 0.95)
+      @simone_low_threshold = Beauvoir.new(:country => :us, :threshold => 0.75, :lower_confidence_bound => 0.6)
+      @simone = Beauvoir.new(:country => :us, :threshold => 0.99)
     end
 
-    it "should accept a quote-unquote simple confidence threshold" do
-      @simone_no_low_threshold.threshold.should eql 0.99
-      @simone_no_low_threshold.lower_threshold.should eql 0.5
-    end
-
-
-    it "should accept a more complex confidence threshold" do
+    it "should accept a quote-unquote simple threshold" do
       @simone.threshold.should eql 0.99
-      @simone.lower_threshold.should eql 0.95
+      @simone.lower_confidence_bound.should eql 0.75
+    end
+
+    it "should accept a more complex lower threshold (i.e. lower confidence bound)" do
+      @simone_low_threshold.threshold.should eql 0.75
+      @simone_low_threshold.lower_confidence_bound.should eql 0.6
     end
 
     it "should normalize input strings to first names" do
-      @simone.normalize("JerEmY k78321kj c[9 821 vc98  v\t\t\nasfasdf").should eql "Jeremy"
+      Beauvoir.normalize("Jer\nEmY k78321kj c[9 821 vc98  v\t\t\nasfasdf").should eql "Jeremy"
     end
 
     it "should return either :male or :female if confidence is within confidence thresholds" do
@@ -32,21 +31,23 @@ describe Beauvoir do
       @simone.guess("Mary").should eql :female
     end
 
+    it "should return the single-value gender proportion" do
+      @simone.male_proportion("John").class.should eql Float
+      @simone.female_proportion("Mary").class.should eql Float
+    end
+
+    it "should return the single-value gender estimated values" do
+      @simone.estimated_male_value("John").class.should eql Float
+      @simone.estimated_female_value("Mary").class.should eql Float
+    end
+
     it "should return :unknown if confidence is not within confidence thresholds" do
       @simone.guess("Pat").should eql :unknown
     end
 
-    it "should return the single-value gender ratio" do
-      @simone.maleness_ratio("John").class.should eql Float
-      @simone.femaleness_ratio("Mary").class.should eql Float
-    end
-
-    it "should use the complex confidence thresholds if both types are set" do
-      @simone.guess("Aadison").should eql :unknown
-    end
-
-    it "should use only the estimated average if lower_threshold is unset" do
-
+    it "should use the complex thresholds to determine unknowns too" do
+      @simone.guess("Dakota").should eql :unknown
+      @simone_low_threshold.guess("Dakota").should eql :male
     end
   end
 end
