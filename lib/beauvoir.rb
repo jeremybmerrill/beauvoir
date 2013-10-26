@@ -1,6 +1,6 @@
 require 'csv'
 require 'set'
-require './lib/name'
+require_relative './name'
 
 class Beauvoir
   DEFAULT_PROPORTION_THRESHOLD = 0.99
@@ -36,7 +36,8 @@ class Beauvoir
     # to avoid ~10sec delay when loading into memory
     #(e.g. seeking around the file?)
     countries.each do |country|
-      CSV.open("lib/data/#{country}processed.csv", :headers => true).each do |row|
+
+      CSV.open(File.join(File.dirname(File.expand_path(__FILE__)), "data/#{country}processed.csv"), :headers => true).each do |row|
         name_str = Beauvoir.normalize(row["Name"])
         name = @names_by_names.fetch(name_str, Name.new(name_str))
         name.male_count += row["count.male"].to_i

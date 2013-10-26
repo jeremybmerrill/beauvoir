@@ -1,16 +1,16 @@
 Gem::Specification.new do |s|
   s.name        = 'beauvoir'
-  s.version     = '0.0.1a'
-  s.date        = '2013-10-18'
+  s.version     = '0.0.2b'
+  s.date        = '2013-10-26'
   s.summary     = "Guess a person's gender by their first name"
   s.description = "Guess gender by a first name using more detailed, better
-                    sourced data from Open Gender Tracker's Global Name Data.
+                    sourced data from Open Gender Tracker's Global Name Data.<br />
                     Beauvoir lets you set avg and lower bounds and choose
-                    countries from which to draw data.
+                    countries from which to draw data. \n
 
                     It's important to note that many people identify as neither
                     a men nor a women. It's important, too, to note that many
-                    people who do identify as male or female have names that
+                    people who do identify as male or female have names that<br />
                     are held by far more people who identify as another gender.
                     All of these people deserve not to be misgendered in public
                     (or in private).
