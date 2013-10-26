@@ -66,10 +66,8 @@ Set a level of statistical significance -- by default 0.95. The lower this level
 
 Name
 ----
-Beauvoir is named after [Simone de Beauvoir](http://en.wikipedia.org/wiki/Simone_de_Beauvoir), a feminist author best known for _The Second Sex), which Wikipeida describes as "a detailed analysis of women's oppression and a foundational tract of contemporary feminism." Hopefully Beauvoir (the Gem) will have some effect by assisting computational efforts to shed light on gender bias and discrimination.
+Beauvoir is named after [Simone de Beauvoir](http://en.wikipedia.org/wiki/Simone_de_Beauvoir), a feminist author best known for _The Second Sex), which Wikipedia describes as "a detailed analysis of women's oppression and a foundational tract of contemporary feminism." Hopefully Beauvoir (the Gem) will have some effect by assisting computational efforts to shed light on gender bias and discrimination.
 
 TODO
 ----
 - Test A.C. Confidence Interval, Expected Value results against the ones in the source data. (The R is abstruse like a goose, so I'm not sure it's implemented right.)
-- Check out `normalize` to make sure it doesn't erase useful information (e.g. by collapsing names that shouldn't be collapsed onto one entry in the hashmap)
-- Move `normalize` onto `name` class.
