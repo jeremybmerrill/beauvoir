@@ -112,4 +112,12 @@ class Beauvoir
       nil
     end
   end
+
+  def inspect
+    inspect_string = "#<#{self.class.name}:0x#{(self.object_id*2).to_s(16)} "
+    exclude = [:@names_by_names, :@names_genders]
+    fields = self.instance_variables - exclude
+    inspect_string << fields.map{|field| "#{field}=#{instance_variable_get(field)}"}.join(", ") << ">"
+    inspect_string
+  end
 end
