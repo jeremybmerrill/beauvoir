@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'beauvoir'
-  s.version     = '0.0.2b'
-  s.date        = '2013-10-26'
+  s.version     = '0.0.2c'
+  s.date        = '2013-11-14'
   s.summary     = "Guess a person's gender by their first name"
   s.description = "Guess gender by a first name using more detailed, better
                     sourced data from Open Gender Tracker's Global Name Data.<br />
