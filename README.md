@@ -12,9 +12,9 @@ This is pre-alpha software. The API will change, I guarantee it.
 Caveats
 -------
 
-It's important to note that many people identify as neither a men nor a women. It's important, too, to note that many people who do identify as male or female have names that are held by far more people who identify as another gender. All of these people deserve not to be misgendered.
+It's important to note that many people identify as neither a men nor a women. It's important, too, to note that many people who do identify as male or female have names for which most other people with that name identify as a different gender. All of these people deserve not to be misgendered.
 
-Nevertheless, automatically classifying people by apparent gender can be a very useful tool to perform censuses of communities or publications to detect and quantify perhaps-invisible bias. VIDA is a pioneer in this field, but their \"Count\" is limited by a manual methodology that depends hundreds of person-hours of labor. There is a place for more automated counts and Beauvoir can help, but if you plan to publish a count like this, you should be careful. You should probably set very high confidence thresholds to make sure you're very unlikely to misgender someone; you should also be prepared to be responsive and respectful if you do. You should include your methodology, prominently. You might consider emphasizing aggregate numbers over your mapping of individual people's names to genders.
+Nevertheless, automatically classifying people by apparent gender can be a very useful tool to perform censuses of communities or publications to detect and quantify perhaps-invisible bias. VIDA is a pioneer in performing theses censuses, but their \"Count\" is limited by a manual methodology that depends hundreds of person-hours of labor. There is a place for more automated counts and Beauvoir can help, but if you plan to publish a count like this, you should be careful. Beauvoir's confidence thresholds are set very high by default on purpose, you shouldn't lower them unless you take other steps to make sure that you're very unlikely to misgender someone; you should also be prepared to be responsive and respectful if you do. You should include your methodology, prominently. You might consider emphasizing aggregate numbers over your mapping of individual people's names to genders.
 
 Usage
 -----
@@ -31,9 +31,9 @@ b.guess("Mary")
 b.guess("Sam")
 => :unknown
 
-b.femaleness_ratio("Sam")
+b.estimated_female_value("Sam")
 => 0.0103360994972961
-b.maleness_ratio("Sam")
+b.estimated_male_value("Sam")
 => 0.9896639005027039
 ````
 
@@ -50,10 +50,10 @@ b.guess("Sam")
 => :male
 
 #the same as above
-b.femaleness_ratio("Sam")
-=> 0.010336099497296115
-b.maleness_ratio("Sam")
-=> 0.9896639005027039
+b.estimated_female_value("Sam")
+=> 0.01034936186847522
+b.estimated_male_value("Sam")
+=> 0.9896506381315247
 ````
 
 Methodology
