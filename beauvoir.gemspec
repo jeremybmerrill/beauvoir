@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'beauvoir'
-  s.version     = '0.0.2c'
-  s.date        = '2013-11-14'
+  s.version     = '0.0.3'
+  s.date        = '2014-01-02'
   s.summary     = "Guess a person's gender by their first name"
   s.description = "Guess gender by a first name using more detailed, better
                     sourced data from Open Gender Tracker's Global Name Data.<br />
@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
                     responsive to the possibility of errors."
   s.authors     = ["Jeremy B. Merrill"]
   s.email       = 'jeremybmerrill@jeremybmerrill.com'
-  s.files       = ["lib/beauvoir.rb", "lib/name.rb", "LICENSE", "README.md"] + Dir["lib/data/*.csv"] #todo: add data files
+  s.files       = ["lib/beauvoir.rb", "lib/beauvoir/name.rb", "lib/beauvoir/statistics.rb", "LICENSE", "README.md"] + Dir["lib/data/*.csv"] #todo: add data files
   s.homepage    =
     'http://rubygems.org/gems/beauvoir'
   s.license       = 'MIT'

@@ -2,14 +2,14 @@ require './lib/beauvoir'
 
 describe Beauvoir do
   it "should be initializable" do
-    Beauvoir.new(:country => :us)
+    Beauvoir::Categorizer.new(:country => :us)
   end
 
 
   context "once initialized" do
     before :all do
-      @simone_low_threshold = Beauvoir.new(:country => :us, :threshold => 0.75, :lower_confidence_bound => 0.6)
-      @simone = Beauvoir.new(:country => :us, :threshold => 0.99)
+      @simone_low_threshold = Beauvoir::Categorizer.new(:country => :us, :threshold => 0.75, :lower_confidence_bound => 0.6)
+      @simone = Beauvoir::Categorizer.new(:country => :us, :threshold => 0.99)
     end
 
     it "should accept a quote-unquote simple threshold" do
@@ -23,7 +23,7 @@ describe Beauvoir do
     end
 
     it "should normalize input strings to first names" do
-      Beauvoir.normalize("Jer\nEmY k78321kj c[9 821 vc98  v\t\t\nasfasdf").should eql "Jeremy"
+      Beauvoir::Categorizer.normalize("Jer\nEmY k78321kj c[9 821 vc98  v\t\t\nasfasdf").should eql "Jeremy"
     end
 
     it "should return either :male or :female if confidence is within confidence thresholds" do
