@@ -32,8 +32,8 @@ describe Beauvoir do
     end
 
     it "should return the single-value gender proportion" do
-      @simone.male_proportion("John").class.should eql Float
-      @simone.female_proportion("Mary").class.should eql Float
+      @simone.raw_male_proportion("John").class.should eql Float
+      @simone.raw_female_proportion("Mary").class.should eql Float
     end
 
     it "should return the single-value gender estimated values" do

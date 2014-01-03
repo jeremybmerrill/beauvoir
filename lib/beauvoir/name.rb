@@ -24,12 +24,12 @@ module Beauvoir
       end
     end
 
-    def female_proportion
+    def raw_female_proportion
       return 0 unless self.total > 0
       @female_count / self.total
     end
 
-    def male_proportion
+    def raw_male_proportion
       return 0 unless self.total > 0
       @male_count / self.total
     end
@@ -42,14 +42,14 @@ module Beauvoir
       # These methods are private for a reason.
       # You should use the guess_gender method instead.
       # (See README.md for more discussion.)
-      def male? 
-        #pure proportions, so even the slightest greater proportion of one gender will affect this
-        @male_count > @female_count
-      end
-
       def female?
         #pure proportions, so even the slightest greater proportion of one gender will affect this
         @female_count > @male_count
+      end
+
+      def male? 
+        #pure proportions, so even the slightest greater proportion of one gender will affect this
+        @male_count > @female_count
       end
 
       def gender
@@ -63,7 +63,7 @@ module Beauvoir
       end
 
       def sufficiently_confident(threshold=DEFAULT_PROPORTION_THRESHOLD, lower_confidence_bound=DEFAULT_LOWER_CONFIDENCE_BOUND)
-        (male_proportion > threshold || female_proportion > threshold) &&
+        (raw_male_proportion > threshold || raw_female_proportion > threshold) &&
           lower > lower_confidence_bound
       end
   end

@@ -37,7 +37,7 @@ module Beauvoir
     def lower
       nt = total + z ** 2
       interval = z * Math.sqrt(estimated_value * (1 - estimated_value) / nt)
-      [female_proportion, male_proportion].max - interval
+      [raw_female_proportion, raw_male_proportion].max - interval
     end
 
     def estimated_value_formula(observed)

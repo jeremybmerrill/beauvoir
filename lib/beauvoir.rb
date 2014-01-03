@@ -96,16 +96,16 @@ module Beauvoir
       end
     end
 
-    def male_proportion(name)
+    def raw_male_proportion(name)
       if name_obj = @names_by_names[Beauvoir::Categorizer.normalize(name)]
-        name_obj.male_proportion
+        name_obj.raw_male_proportion
       else
         nil
       end
     end
-    def female_proportion(name)
+    def raw_female_proportion(name)
       if name_obj = @names_by_names[Beauvoir::Categorizer.normalize(name)]
-        name_obj.female_proportion
+        name_obj.raw_female_proportion
       else
         nil
       end
