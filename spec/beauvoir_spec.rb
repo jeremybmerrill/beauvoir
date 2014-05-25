@@ -27,8 +27,8 @@ describe Beauvoir do
     end
 
     it "should return either :male or :female if confidence is within confidence thresholds" do
-      @simone.guess("John").should eql :male
-      @simone.guess("Mary").should eql :female
+      @simone.guess_gender("John").should eql :male
+      @simone.guess_gender("Mary").should eql :female
     end
 
     it "should return the single-value gender proportion" do
@@ -42,12 +42,12 @@ describe Beauvoir do
     end
 
     it "should return :unknown if confidence is not within confidence thresholds" do
-      @simone.guess("Pat").should eql :unknown
+      @simone.guess_gender("Pat").should eql :unknown
     end
 
     it "should use the complex thresholds to determine unknowns too" do
-      @simone.guess("Dakota").should eql :unknown
-      @simone_low_threshold.guess("Dakota").should eql :male
+      @simone.guess_gender("Dakota").should eql :unknown
+      @simone_low_threshold.guess_gender("Dakota").should eql :male
     end
   end
 end
