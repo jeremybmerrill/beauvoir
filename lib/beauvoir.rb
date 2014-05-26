@@ -4,7 +4,7 @@ require_relative './beauvoir/statistics'
 require_relative './beauvoir/name'
 
 module Beauvoir
-  class Categorizer
+  class Beauvoir
     DEFAULT_PROPORTION_THRESHOLD = 0.95
     DEFAULT_LOWER_CONFIDENCE_BOUND = 0.75
     MINIMUM_CODING_GROUP_SIZE = 3
@@ -40,7 +40,7 @@ module Beauvoir
       countries.each do |country|
 
         CSV.open(File.join(File.dirname(File.expand_path(__FILE__)), "data/#{country}processed.csv"), :headers => true).each do |row|
-          name_str = Beauvoir::Categorizer.normalize(row["Name"])
+          name_str = self.class.normalize(row["Name"])
           name = @names_by_names.fetch(name_str, Name.new(name_str))
           name.male_count += row["count.male"].to_i
           name.female_count += row["count.female"].to_i
@@ -79,22 +79,25 @@ module Beauvoir
     # beauvoir_instance.guess_gender(["Jeremy", "Nathan", "Adam"])
     # => {:male=>0.9960086726125402, :female=>0.004007321921194168}
     # this method returns the sum of estimated values.
-    def estimated_gender_ratio(*names)
-      return {:unknown => names.size, :error => "Too few names as argument for estimated_gender_ratio" } if names.size < MINIMUM_CODING_GROUP_SIZE
+    def estimated_continuous_gender_ratio(*names)
+      return {:unknown => names.size, :error => "Too few names as argument for estimated_continuous_gender_ratio" } if names.size < MINIMUM_CODING_GROUP_SIZE
       estimated_male_total = names.inject(0.0){|memo, name| memo + estimated_male_value(name) }
       {:male => estimated_male_total / names.size, :female => ((names.size - estimated_male_total) / names.size)}
     end
 
-    def estimated_gender_ratio_with_count(*names)
-      ratios = estimated_gender_ratio(*names)
-      ratios[:total] = names.size
-      ratios
+    # beauvoir_instance.guess_gender(["Jeremy", "Nathan", "Adam"])
+    # => {:male => 3, :female => 0, :unknown => 0}
+    def estimated_discrete_gender_counts(*names)
+      # raise ArgumentError, "estimated_discrete_gender_counts needs at least two names as arguments" if names.size < MINIMUM_CODING_GROUP_SIZE
+      return {:unknown => names.size } if names.size < MINIMUM_CODING_GROUP_SIZE
+      result =names.each.with_object(Hash.new(0)){|e, h| h[guess_gender(e)] += 1}
+      {:male => 0, :female => 0}.merge(result) #ensure :male and :female keys are both in the result
     end
 
     #convenience method, returns lots of stuff in one hash
     def gender_info(*names)
-      counts = gender_counts(*names)
-      ratios = estimated_gender_ratio(*names)
+      counts = estimated_discrete_gender_counts(*names)
+      ratios = estimated_continuous_gender_ratio(*names)
       info = {}
       ratios.keys.each do |gender|
         info[gender] = {:ratio => ratios[gender], :count => counts[gender]}
@@ -103,20 +106,21 @@ module Beauvoir
       info
     end
 
-    # beauvoir_instance.guess_gender(["Jeremy", "Nathan", "Adam"])
-    # => {:male => 3, :female => 0, :unknown => 0}
-    def gender_counts(*names)
-      # raise ArgumentError, "gender_counts needs at least two names as arguments" if names.size < MINIMUM_CODING_GROUP_SIZE
-      return {:unknown => names.size } if names.size < MINIMUM_CODING_GROUP_SIZE
-      names.each.with_object(Hash.new(0)){|e, h| h[guess_gender(e)] += 1}
+    # convenience methods
+
+    def estimated_continuous_gender_ratio_with_count(*names)
+      ratios = estimated_continuous_gender_ratio(*names)
+      ratios[:total] = names.size
+      ratios
     end
+
 
     # beauvoir_instance.guess_gender(["Jeremy", "Kim", "Sam", "Mary])
     # => {:male => 0.25, :female => 0.25, :unknown => 0.5, :total => 4}
-    def ratio_of_guessed_genders(*names)
+    def estimated_discrete_gender_ratio(*names)
       # raise ArgumentError, "ratio_of_guessed_genders needs at least two names as arguments" if names.size < MINIMUM_CODING_GROUP_SIZE
       return {:unknown => names.size } if names.size < MINIMUM_CODING_GROUP_SIZE
-      gender_counts(*names).each_with_object({}){|(gender, count), memo| memo[gender] = count.to_f / names.size }
+      estimated_discrete_gender_counts(*names).each_with_object({}){|(gender, count), memo| memo[gender] = count.to_f / names.size }
     end
 
     def ratio_of_guessed_genders_with_count(*names)
@@ -134,13 +138,13 @@ module Beauvoir
       inspect_string
     end
 
-    def guess_gender(name)
-      @names_genders.fetch(Beauvoir::Categorizer.normalize(name), :unknown)
-    end
-
     private
+      def guess_gender(name)
+        @names_genders.fetch(self.class.normalize(name), :unknown)
+      end
+
       def estimated_male_value(name)
-        if name_obj = @names_by_names[Beauvoir::Categorizer.normalize(name)]
+        if name_obj = @names_by_names[self.class.normalize(name)]
           name_obj.estimated_male_value
         else
           nil
@@ -148,7 +152,7 @@ module Beauvoir
       end
 
       def estimated_female_value(name)
-        if name_obj = @names_by_names[Beauvoir::Categorizer.normalize(name)]
+        if name_obj = @names_by_names[self.class.normalize(name)]
           name_obj.estimated_female_value
         else
           nil
@@ -156,14 +160,14 @@ module Beauvoir
       end
 
       def raw_male_proportion(name)
-        if name_obj = @names_by_names[Beauvoir::Categorizer.normalize(name)]
+        if name_obj = @names_by_names[self.class.normalize(name)]
           name_obj.raw_male_proportion
         else
           nil
         end
       end
       def raw_female_proportion(name)
-        if name_obj = @names_by_names[Beauvoir::Categorizer.normalize(name)]
+        if name_obj = @names_by_names[self.class.normalize(name)]
           name_obj.raw_female_proportion
         else
           nil
