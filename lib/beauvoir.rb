@@ -78,10 +78,10 @@ module Beauvoir
 
     # beauvoir_instance.guess_gender(["Jeremy", "Nathan", "Adam"])
     # => {:male=>0.9960086726125402, :female=>0.004007321921194168}
-    # this method returns the sum of estimated values.
+    # this method returns the sum of estimated proportions.
     def estimated_continuous_gender_ratio(*names)
       return {:unknown => names.size, :error => "Too few names as argument for estimated_continuous_gender_ratio" } if names.size < MINIMUM_CODING_GROUP_SIZE
-      estimated_male_total = names.inject(0.0){|memo, name| memo + estimated_male_value(name) }
+      estimated_male_total = names.inject(0.0){|memo, name| memo + estimated_male_proportion(name) }
       {:male => estimated_male_total / names.size, :female => ((names.size - estimated_male_total) / names.size)}
     end
 
@@ -143,17 +143,17 @@ module Beauvoir
         @names_genders.fetch(self.class.normalize(name), :unknown)
       end
 
-      def estimated_male_value(name)
+      def estimated_male_proportion(name)
         if name_obj = @names_by_names[self.class.normalize(name)]
-          name_obj.estimated_male_value
+          name_obj.estimated_male_proportion
         else
           nil
         end
       end
 
-      def estimated_female_value(name)
+      def estimated_female_proportion(name)
         if name_obj = @names_by_names[self.class.normalize(name)]
-          name_obj.estimated_female_value
+          name_obj.estimated_female_proportion
         else
           nil
         end
