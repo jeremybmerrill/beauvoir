@@ -81,7 +81,7 @@ module Beauvoir
     # this method returns the sum of estimated proportions.
     def estimated_continuous_gender_ratio(*names)
       return {:unknown => names.size, :error => "Too few names as argument for estimated_continuous_gender_ratio" } if names.size < MINIMUM_CODING_GROUP_SIZE
-      estimated_male_total = names.inject(0.0){|memo, name| memo + estimated_male_proportion(name) }
+      estimated_male_total = names.inject(0.0){|memo, name| memo + (prop = estimated_male_proportion(name)).nil? ? 0.5 : prop }
       {:male => estimated_male_total / names.size, :female => ((names.size - estimated_male_total) / names.size)}
     end
 
