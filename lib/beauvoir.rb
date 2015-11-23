@@ -74,7 +74,7 @@ module Beauvoir
       if name.include?(" ")
         name = name[0...name.index(" ")]
       end
-      name[0].upcase + name[1..-1].downcase
+      name[0].to_s.upcase + name[1..-1].to_s.downcase
     end
 
     # beauvoir_instance.guess_gender(["Jeremy", "Nathan", "Adam"])
