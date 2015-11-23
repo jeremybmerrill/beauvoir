@@ -69,6 +69,7 @@ module Beauvoir
     #
     def self.normalize(name)
       name.tr!("^A-Za-z' \-", '')
+      name.strip!
       # name.gsub!(/[^A-Za-z \-\']+/, '') #this I suspect is done more efficiently with String#tr
       if name.include?(" ")
         name = name[0...name.index(" ")]
