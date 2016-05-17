@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
   s.name        = 'beauvoir'
   s.version     = '0.0.3'
-  s.date        = '2014-01-02'
-  s.summary     = "Guess a person's gender by their first name"
+  s.date        = '2014-04-26'
+  s.summary     = "Guess a group of people's gender ratio by using their first names"
   s.description = "Guess gender by a first name using more detailed, better
                     sourced data from Open Gender Tracker's Global Name Data.<br />
                     Beauvoir lets you set avg and lower bounds and choose
