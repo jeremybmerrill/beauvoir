@@ -22,7 +22,7 @@ Usage
 Basic case:
 ````
 require 'beauvoir'
-b = Beauvoir.new
+b = Beauvoir::Categorizer.new
 
 b.guess("John")
 => :male
@@ -40,7 +40,7 @@ b.estimated_male_value("Sam")
 Set other options.
 ````
 require 'beauvoir'
-b = Beauvoir.new(:country => :uk, :threshold => 0.95, :lower_threshold => 0.66)
+b = Beauvoir::Categorizer.new(:country => :uk, :threshold => 0.95, :lower_threshold => 0.66)
 
 b.guess("John")
 => :male
